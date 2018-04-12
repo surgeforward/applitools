@@ -37,13 +37,16 @@ public class EyesWatcher
     eyes.setIsDisabled(APPLITOOLS_KEY == null);
 
     if (!eyes.getIsDisabled() && localBranchName != null) {
-      String buildNumber = System.getenv("bamboo_buildNumber");
-      batch = new BatchInfo(localBranchName + (buildNumber != null ? " #" + buildNumber : ""));
+      if (batch == null) {
+        String buildNumber = System.getenv("bamboo_buildNumber");
+        batch = new BatchInfo(localBranchName + (buildNumber != null ? " #" + buildNumber : ""));
 
-      // Aggregates tests under the same batch when tests are run in different processes (e.g. split tests in bamboo).
-      if (buildNumber != null) {
-        batch.setId(batch.getName());
+        // Aggregates tests under the same batch when tests are run in different processes (e.g. split tests in bamboo).
+        if (buildNumber != null) {
+          batch.setId(batch.getName());
+        }
       }
+
       eyes.setApiKey(APPLITOOLS_KEY);
       eyes.setBatch(batch);
 
