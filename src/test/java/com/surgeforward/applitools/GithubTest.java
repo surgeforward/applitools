@@ -3,6 +3,8 @@ package com.surgeforward.applitools;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.applitools.eyes.RectangleSize;
+import com.applitools.eyes.selenium.Eyes;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import junit.framework.TestCase;
@@ -27,9 +29,13 @@ interface UIStateChangeable{
 public class GithubTest extends TestCase implements UIStateChangeable
 {
   private WebDriver driver;
+  
+  private int width;
+  
+  private int height;
 
   @Rule
-  public EyesWatcher eyesWatcher;
+  public EyesWatcher eyesWatcher = new EyesWatcher();
 
   @Parameters
   public static Collection<Integer[]> data() {
@@ -40,7 +46,8 @@ public class GithubTest extends TestCase implements UIStateChangeable
   }
 
   public GithubTest(Integer width, Integer height) {
-    eyesWatcher = new EyesWatcher(width, height);
+    this.width = width;
+    this.height = height;
   }
 
   @Before
@@ -50,6 +57,9 @@ public class GithubTest extends TestCase implements UIStateChangeable
     Configuration.browser = "chrome";
     Configuration.headless = true;
     driver = WebDriverRunner.getAndCheckWebDriver();
+    
+    // set the viewport here to avoid potential instabilities.
+    Eyes.setViewportSize(driver, new RectangleSize(width, height));
   }
 
   @After

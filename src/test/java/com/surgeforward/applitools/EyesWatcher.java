@@ -1,7 +1,6 @@
 package com.surgeforward.applitools;
 
 import com.applitools.eyes.BatchInfo;
-import com.applitools.eyes.RectangleSize;
 import com.applitools.eyes.selenium.Eyes;
 import com.applitools.eyes.selenium.fluent.Target;
 import com.codeborne.selenide.WebDriverRunner;
@@ -13,16 +12,7 @@ import org.openqa.selenium.internal.WrapsDriver;
 public class EyesWatcher
     extends TestWatcher
 {
-  private int height;
-
-  private int width;
-
   public Eyes eyes = new Eyes();
-
-  public EyesWatcher(int width, int height) {
-    this.height = height;
-    this.width = width;
-  }
 
   private String testName;
 
@@ -102,7 +92,7 @@ public class EyesWatcher
         remoteDriver = ((WrapsDriver) remoteDriver).getWrappedDriver();
       }
 
-      eyes.open(remoteDriver, APPLICATION_NAME, testName, new RectangleSize(width, height));
+      eyes.open(remoteDriver, APPLICATION_NAME, testName);
     }
     eyes.check(tag, Target.window());
   }
