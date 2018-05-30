@@ -18,7 +18,7 @@
     <dependency>
       <groupId>com.applitools</groupId>
       <artifactId>eyes-selenium-java3</artifactId>
-      <version>RELEASE</version>
+      <version>3.28</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
