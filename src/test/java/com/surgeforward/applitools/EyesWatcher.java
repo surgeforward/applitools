@@ -12,7 +12,16 @@ import org.openqa.selenium.internal.WrapsDriver;
 public class EyesWatcher
     extends TestWatcher
 {
+  //private int height;
+
+  //private int width;
+
   public Eyes eyes = new Eyes();
+
+  //public EyesWatcher(int width, int height) {
+  //  this.height = height;
+  //  this.width = width;
+  //}
 
   private String testName;
 
@@ -92,7 +101,15 @@ public class EyesWatcher
         remoteDriver = ((WrapsDriver) remoteDriver).getWrappedDriver();
       }
 
+      /*
+       * Rather than call eyes.open with a specified viewport, just use the current viewport size.
+       * In our example we will simply call Eyes.setViewportSize(driver, new RectangleSize(width, height));
+       * in our @Before method. The problem with specifying it here is that it's possible (depending on the app)
+       * for instabilities to occur as we are resizing the viewport right before our first validation is taken.
+       * (ui elements can shift around, be reresized, etc).
+       */
       eyes.open(remoteDriver, APPLICATION_NAME, testName);
+      //eyes.open(remoteDriver, APPLICATION_NAME, testName, new RectangleSize(width, height));
     }
     eyes.check(tag, Target.window());
   }
